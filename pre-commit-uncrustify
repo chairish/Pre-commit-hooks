@@ -17,11 +17,11 @@
 # SETTINGS
 # set path to uncrustify binary
 # UNCRUSTIFY="/usr/bin/uncrustify"
-UNCRUSTIFY="/usr/bin/uncrustify"
+UNCRUSTIFY="uncrustify"
 
 # set uncrustify config location
 # CONFIG="/home/user/.config/uncrustify.cfg"
-CONFIG="/unspecified/"
+CONFIG=".uncrustifyconfig"
 
 # the source language: C, CPP, D, CS, JAVA, PAWN, VALA, OC, OC+
 # SOURCE_LANGUAGE="CPP"
@@ -39,7 +39,7 @@ PARSE_EXTS=true
 
 # file types to parse. Only effective when PARSE_EXTS is true.
 # FILE_EXTS=".c .h .cpp .hpp"
-FILE_EXTS=".c .h .cpp .hpp"
+FILE_EXTS=".m .h .c .cpp .hpp"
 
 ##################################################################
 # There should be no need to change anything below this line.
@@ -121,9 +121,13 @@ printf "\nThe following differences were found between the code to commit "
 printf "and the uncrustify rules:\n\n"
 cat "$patch"
 
-printf "\nYou can apply these changes with:\n git apply $patch\n"
-printf "(may need to be called from the root directory of your repository)\n"
-printf "Aborting commit. Apply changes and commit again or skip checking with"
-printf " --no-verify (not recommended).\n"
+printf "\nApplying diff automatically from $patch..."
+git apply $patch
+
+printf "\nYou should now recommit your changes\n"
+# printf "\nYou can apply these changes with:\n git apply $patch\n"
+# printf "(may need to be called from the root directory of your repository)\n"
+# printf "Aborting commit. Apply changes and commit again or skip checking with"
+# printf " --no-verify (not recommended).\n"
 
 exit 1
